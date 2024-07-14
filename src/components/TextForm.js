@@ -40,22 +40,29 @@ export default function TextForm(props) {
         props.showAlert("Text cleared", "success");
     }
 
+    const wordCounter = (word) => {
+        let wordArr = word.split(" ");
+        let count = wordArr.length;
+        if(wordArr[(wordArr.length - 1)] === " " || wordArr[(wordArr.length - 1)] === "") count--;
+        return count;
+    }
+
     const [text, setText] = useState("");
 
     return (
         <>
-            <div className='container' style= {{backgroundColor : props.mode === 'dark' ? "#0a0870" : "white", color: props.mode === 'dark' ? "white" : "dark" }}>
-                <div className="mb-3">
-                    <h1 style={{color: props.mode === 'dark' ? "white" : "black"}}>{props.heading}</h1>
-                    <textarea className ="form-control" value={text} onChange={handleOnChange} id="exampleFormControlTextarea1" rows="8"   style= {{backgroundColor : props.mode === 'dark' ? "black" : "white", color : props.mode === 'dark' ? "white" : "black" }} > </textarea>
+            <div className='container ' style= {props.textFormStyle}>
+                <div className="mb-3 p-3">
+                    <h1>{props.heading}</h1>
+                    <textarea className ="form-control" value={text} onChange={handleOnChange} id="exampleFormControlTextarea1" rows="8" style={props.textAreaStyle} > </textarea>
                 </div>
-                <button className = "btn btn-primary mx-1" onClick= {handleUpClick} >Convert to upper Case </button>
-                <button className = "btn btn-primary mx-1" onClick= {handleLoClick} >Convert to Lower case </button>
-                <button className = "btn btn-primary mx-1" onClick= {clearText} >Clear Text</button>
+                <button className = "btn btn-primary mx-1 my-2" onClick= {handleUpClick} style={props.buttonStyle} >Convert to upper Case </button>
+                <button className = "btn btn-primary mx-1 my-2" onClick= {handleLoClick} style={props.buttonStyle}>Convert to Lower case </button>
+                <button className = "btn btn-primary mx-1 my-2" onClick= {clearText} style={props.buttonStyle}>Clear Text</button>
             </div>
-            <div className="container" style={{color: props.mode === 'dark' ? "white" : "black"}}>
+            <div className="container p-1" style={props.textFormStyle}>
                 <h2>Your text summary</h2>
-                <p>{text.split(" ").length} words and {text.length} charecters. and {0.008 * text.split(' ').length} minutes to read it</p>
+                <p>{wordCounter(text)} words and {text.length} charecters. and {0.008 * text.split(' ').length} minutes to read it</p>
                 <h2>Case counter</h2>
                 <p> The number of UpperCase letters are {caseCounter()[0]} and the number of LowerCase is {caseCounter()[1]}  </p>
                 <h2>Text summary</h2>
